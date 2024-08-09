@@ -1,0 +1,14 @@
+{
+  "name": "party-pics-be",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "functions-framework --target=helloWorld"
+  },
+  "repository": "git@github.com:Mahadi-Ahmed/party-pics-be.git",
+  "author": "Mahadi-Ahmed <mahadia.dev@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.4.2"
+  }
+}
