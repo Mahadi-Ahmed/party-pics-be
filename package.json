@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "functions-framework --target=helloWorld"
+    "dev": "functions-framework --target=helloWorld",
+    "deploy": "gcloud functions deploy hello-world --gen2 --runtime=nodejs20 --region=europe-north1 --source=. --entry-point=helloWorld --trigger-http",
+    "destroy": "gcloud functions delete nodejs-http-function --gen2 --region europe-north1"
   },
   "repository": "git@github.com:Mahadi-Ahmed/party-pics-be.git",
   "author": "Mahadi-Ahmed <mahadia.dev@gmail.com>",
