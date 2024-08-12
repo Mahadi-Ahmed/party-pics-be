@@ -8,4 +8,4 @@ Backend for party pics project
 - [x] Create bucket for pictures
 - [x] Setup authentication with a service account so i can access the api from [workstation](https://cloud.google.com/docs/authentication/client-libraries)
 - [x] Create signed url via console for cloud storage
-- [] Create signed url via function
+- [x] Create signed url via function
