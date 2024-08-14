@@ -22,7 +22,7 @@ exports.generateSignedUrls = async (req, res) => {
     res.send(response);
   } catch (error) {
     console.error('Error in getSignedUrl:', error);
-    res.status(500).send('Error generating signed URL');
+    res.status(500).json({ error: 'Error generating signed URL', details: error.message });
   }
 }
 
