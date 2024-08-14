@@ -1,7 +1,16 @@
 const { Storage } = require('@google-cloud/storage')
 
 exports.generateSignedUrls = async (req, res) => {
-  console.log('Starting getSignedUrl v.0.1')
+  console.log('Starting getSignedUrl v.0.2.1')
+  const body = req?.body
+  
+  // Check if body is missing or empty
+  if (!body || Object.keys(body).length === 0) {
+    console.log('Request body is missing or empty')
+    return res.status(400).json({ error: 'Request body is required' })
+  }
+
+  console.log(body)
   const allowedOrigins = ['http://localhost:5173', 'https://ditpi.mahadia.dev/', 'https://party-pics.pages.dev']
   const origin = req.headers.origin
   if (allowedOrigins.includes(origin) || origin?.endsWith('.party-pics.pages.dev')) {
