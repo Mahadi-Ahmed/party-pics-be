@@ -1,5 +1,6 @@
 # party-pics-be
 Backend for party pics project
+Create signed urls for FE to use for uploading
 
 # TODO:
 - [x] deploy hello world function
@@ -9,3 +10,4 @@ Backend for party pics project
 - [x] Setup authentication with a service account so i can access the api from [workstation](https://cloud.google.com/docs/authentication/client-libraries)
 - [x] Create signed url via console for cloud storage
 - [x] Create signed url via function
+- [x] handle potential conflicts of file name
