@@ -3,7 +3,7 @@ const { Storage } = require('@google-cloud/storage')
 exports.generateSignedUrls = async (req, res) => {
   console.log('Starting getSignedUrl v.0.2.1')
   const body = req?.body
-  
+
   // Check if body is missing or empty
   if (!body || Object.keys(body).length === 0) {
     console.log('Request body is missing or empty')
@@ -18,7 +18,7 @@ exports.generateSignedUrls = async (req, res) => {
   }
 
   try {
-    const response = await helper();
+    const response = await helper(body);
     res.send(response);
   } catch (error) {
     console.error('Error in getSignedUrl:', error);
@@ -26,19 +26,31 @@ exports.generateSignedUrls = async (req, res) => {
   }
 }
 
-const helper = async () => {
-  const storage = new Storage({
-    projectId: 'mahadi-tabu-wedding-pic-app',
-    keyFilename: '.sa-key.json'
-  })
+const helper = async (files) => {
+  const folder = generateRandomString()
+  const storage = new Storage({})
   const options = {
     version: 'v4',
     action: 'resumable',
     expires: Date.now() + 60 * 60 * 1000,
   }
 
-  const [url] = await storage.bucket('party-pics-test-1').file('/test').getSignedUrl(options)
-  console.log('Generated PUT signed URL:');
-  console.log(url);
-  return url
+  const signedUrls = []
+  for (const file of files) {
+    const [url] = await storage.bucket('party-pics-test-1').file(`/${folder}/${file.name}`).getSignedUrl(options)
+    signedUrls.push(url)
+    console.log('Generated PUT signed URL:');
+    console.log(url);
+  }
+
+  return signedUrls
+}
+
+const generateRandomString = (length = 5) => {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
 }
