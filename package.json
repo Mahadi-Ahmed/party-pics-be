@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "functions-framework --target=getSignedUrl",
-    "deploy": "gcloud functions deploy getSignedUrl --gen2 --runtime=nodejs20 --region=europe-north1 --source=. --entry-point=getSignedUrl --trigger-http",
-    "destroy": "gcloud functions delete getSignedUrl --gen2 --region europe-north1"
+    "dev": "functions-framework --target=generateSignedUrls",
+    "deploy": "gcloud functions deploy generate-signed-urls --gen2 --runtime=nodejs20 --region=europe-north1 --source=. --entry-point=generateSignedUrls --trigger-http",
+    "destroy": "gcloud functions delete generate-signed-urls --gen2 --region europe-north1",
+    "destroy-getSignedUrl": "gcloud functions delete getSignedUrl --gen2 --region europe-north1"
   },
   "repository": "git@github.com:Mahadi-Ahmed/party-pics-be.git",
   "author": "Mahadi-Ahmed <mahadia.dev@gmail.com>",

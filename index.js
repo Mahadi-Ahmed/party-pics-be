@@ -1,6 +1,6 @@
 const { Storage } = require('@google-cloud/storage')
 
-exports.getSignedUrl = async (req, res) => {
+exports.generateSignedUrls = async (req, res) => {
   console.log('Starting getSignedUrl v.0.1')
   const allowedOrigins = ['http://localhost:5173', 'https://ditpi.mahadia.dev/', 'https://party-pics.pages.dev']
   const origin = req.headers.origin
@@ -18,7 +18,10 @@ exports.getSignedUrl = async (req, res) => {
 }
 
 const helper = async () => {
-  const storage = new Storage()
+  const storage = new Storage({
+    projectId: 'mahadi-tabu-wedding-pic-app',
+    keyFilename: '.sa-key.json'
+  })
   const options = {
     version: 'v4',
     action: 'resumable',
