@@ -1,28 +1,39 @@
 const { Storage } = require('@google-cloud/storage')
 
 exports.generateSignedUrls = async (req, res) => {
-  console.log('Starting getSignedUrl v.0.2.1')
-  const body = req?.body
+  console.log('Starting getSignedUrl v.0.2.3')
 
-  // Check if body is missing or empty
-  if (!body || Object.keys(body).length === 0) {
-    console.log('Request body is missing or empty')
-    return res.status(400).json({ error: 'Request body is required' })
-  }
-
-  console.log(body)
   const allowedOrigins = ['http://localhost:5173', 'https://ditpi.mahadia.dev/', 'https://party-pics.pages.dev']
   const origin = req.headers.origin
   if (allowedOrigins.includes(origin) || origin?.endsWith('.party-pics.pages.dev')) {
     res.set('Access-Control-Allow-Origin', origin)
+    res.set('Access-Control-Allow-Methods', 'POST, OPTIONS')
+    res.set('Access-Control-Allow-Headers', 'Content-Type')
+    res.set('Access-Control-Max-Age', '3600')
   }
 
-  try {
-    const response = await helper(body);
-    res.send(response);
-  } catch (error) {
-    console.error('Error in getSignedUrl:', error);
-    res.status(500).json({ error: 'Error generating signed URL', details: error.message });
+  if (req.method === 'OPTIONS') {
+    return res.status(204).send('')
+  }
+
+  if (req.method === 'POST') {
+    const body = req?.body
+
+    // Check if body is missing or empty
+    if (!body || Object.keys(body).length === 0) {
+      console.log('Request body is missing or empty')
+      return res.status(400).json({ error: 'Request body is required' })
+    }
+
+    try {
+      const response = await helper(body);
+      res.send(response);
+    } catch (error) {
+      console.error('Error in getSignedUrl:', error);
+      res.status(500).json({ error: 'Error generating signed URL', details: error.message });
+    }
+  } else {
+    res.status(405).json({ error: 'Method Not Allowed' })
   }
 }
 
@@ -31,18 +42,23 @@ const helper = async (files) => {
   const storage = new Storage({})
   const options = {
     version: 'v4',
-    action: 'resumable',
+    action: 'PUT',
     expires: Date.now() + 60 * 60 * 1000,
+  }
+
+  if (files[0].name === undefined) {
+    console.log('undefined file name')
+    throw new Error('undefined file name')
   }
 
   const signedUrls = []
   for (const file of files) {
-    const [url] = await storage.bucket('party-pics-test-1').file(`/${folder}/${file.name}`).getSignedUrl(options)
+    console.log('Generated PUT signed URL:', file.name);
+    const [url] = await storage.bucket('party-pics-test-1').file(`${folder}/${file.name}`).getSignedUrl(options)
     signedUrls.push(url)
-    console.log('Generated PUT signed URL:');
-    console.log(url);
   }
 
+  // console.log(JSON.parse(JSON.stringify(signedUrls)))
   return signedUrls
 }
 
