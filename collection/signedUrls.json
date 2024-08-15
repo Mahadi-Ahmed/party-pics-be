@@ -1,0 +1,69 @@
+{
+  "name": "signedUrls",
+  "requests": [
+    {
+      "name": "generateSignedUrls",
+      "url": "http://localhost:8080/",
+      "method": "POST",
+      "params": [],
+      "headers": [
+        {
+          "data": [
+            "cache-control",
+            "no-cache"
+          ],
+          "enabled": true
+        },
+        {
+          "data": [
+            "user-agent",
+            "ATAC/v0.16.0"
+          ],
+          "enabled": true
+        },
+        {
+          "data": [
+            "accept",
+            "*/*"
+          ],
+          "enabled": true
+        },
+        {
+          "data": [
+            "accept-encoding",
+            "gzip, deflate, br"
+          ],
+          "enabled": true
+        },
+        {
+          "data": [
+            "connection",
+            "keep-alive"
+          ],
+          "enabled": true
+        },
+        {
+          "data": [
+            "content-type",
+            "application/json"
+          ],
+          "enabled": true
+        }
+      ],
+      "body": {
+        "json": "[\n  {\n    \"name\": \"DSCF1370.jpg\",\n    \"type\": \"image/jpeg\"\n  },\n  {\n   \"name\": \"DSCF1371.jpg\",\n   \"type\": \"image/jpeg\"\n  },\n  {\n   \"name\": \"DSCF1372.jpg\",\n   \"type\": \"image.jpeg\"\n  }\n]"
+      },
+      "auth": "no_auth",
+      "scripts": {
+        "pre_request_script": null,
+        "post_request_script": null
+      },
+      "settings": {
+        "use_config_proxy": true,
+        "allow_redirects": true,
+        "store_received_cookies": true,
+        "pretty_print_response_content": true
+      }
+    }
+  ]
+}
