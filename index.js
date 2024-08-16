@@ -3,7 +3,7 @@ const { Storage } = require('@google-cloud/storage')
 exports.generateSignedUrls = async (req, res) => {
   console.log('Starting getSignedUrl v.0.2.3')
 
-  const allowedOrigins = ['http://localhost:5173', 'https://ditpi.mahadia.dev/', 'https://party-pics.pages.dev']
+  const allowedOrigins = ['http://localhost:5173', 'https://ditpi.mahadia.dev', 'https://party-pics.pages.dev']
   const origin = req.headers.origin
   if (allowedOrigins.includes(origin) || origin?.endsWith('.party-pics.pages.dev')) {
     res.set('Access-Control-Allow-Origin', origin)
