@@ -51,11 +51,12 @@ const helper = async (files) => {
     throw new Error('undefined file name')
   }
 
-  const signedUrls = []
+  const signedUrls = {}
   for (const file of files) {
     console.log('Generated PUT signed URL:', file.name);
     const [url] = await storage.bucket('party-pics-test-1').file(`${folder}/${file.name}`).getSignedUrl(options)
-    signedUrls.push(url)
+    signedUrls[file.name] = url
+    // signedUrls.push(url)
   }
 
   // console.log(JSON.parse(JSON.stringify(signedUrls)))
