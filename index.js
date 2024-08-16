@@ -39,12 +39,7 @@ exports.generateSignedUrls = async (req, res) => {
 
 const helper = async (files) => {
   const folder = generateRandomString()
-  const storage = new Storage({})
-  const options = {
-    version: 'v4',
-    action: 'PUT',
-    expires: Date.now() + 60 * 60 * 1000,
-  }
+  const storage = new Storage()
 
   if (files[0].name === undefined) {
     console.log('undefined file name')
@@ -54,6 +49,12 @@ const helper = async (files) => {
   const signedUrls = {}
   for (const file of files) {
     console.log('Generated PUT signed URL:', file.name);
+    const options = {
+      version: 'v4',
+      action: 'write',
+      expires: Date.now() + 60 * 60 * 1000,
+      contentType: file.type
+    }
     const [url] = await storage.bucket('party-pics-test-1').file(`${folder}/${file.name}`).getSignedUrl(options)
     signedUrls[file.name] = url
     // signedUrls.push(url)
